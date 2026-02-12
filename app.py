@@ -7,9 +7,11 @@ app = Flask(__name__)
 def index():
     exam_status = firewall.exam_status()
     devices = firewall.connected_devices()
-    return render_template("index.html",
-                           exam_status=exam_status,
-                           devices=devices)
+    return render_template(
+        "index.html",
+        exam_status=exam_status,
+        devices=devices
+    )
 
 @app.route("/exam/on")
 def exam_on():
@@ -32,5 +34,5 @@ def unblock_device(mac):
     return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
+
