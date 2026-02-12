@@ -18,17 +18,24 @@ def exam_status():
 
 def connected_devices():
     devices = []
-    output = subprocess.check_output("ip neigh", shell=True).decode()
+    output = subprocess.check_output("ip neigh", shell=True, text=True)
 
     for line in output.splitlines():
         parts = line.split()
+
         if "lladdr" in parts:
-            devices.append({
-                "ip": parts[0],
-                "mac": parts[4],
-                "state": parts[-1]
-            })
+            ip = parts[0]
+            mac = parts[4]
+            state = parts[-1]
+            if ip.startswith("192.168.50."):
+                devices.append({
+                    "ip": ip,
+                    "mac": mac,
+                    "state": state
+                })
+
     return devices
+
 
 def block_device(mac):
     run(f"iptables -I FORWARD -m mac --mac-source {mac} -j DROP")
