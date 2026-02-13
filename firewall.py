@@ -69,7 +69,7 @@ def get_blocked_macs():
     blocked = set()
 
     output = subprocess.check_output(
-        "iptables -L FORWARD -n --line-numbers",
+        "sudo iptables -L FORWARD -n --line-numbers",
         shell=True,
         text=True
     )
